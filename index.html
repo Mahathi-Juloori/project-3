@@ -5,27 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Manager Tool</title>
 
-    <!-- Bootstrap 5 -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
     <style>
-      /* Minimal adjustments for layout that Bootstrap utilities can't perfectly cover in 5.3 without custom builds */
       .sidebar {
         width: 280px;
         min-height: 100vh;
       }
 
-      /* Smooth theme transition */
       body,
       .card,
       .sidebar,
@@ -41,7 +36,6 @@
 
   <body class="bg-body-secondary">
     <div class="d-flex" id="wrapper">
-      <!-- Sidebar -->
       <div
         class="sidebar bg-body-tertiary border-end p-3 d-none d-lg-flex flex-column flex-shrink-0 position-fixed top-0 start-0 z-3"
       >
@@ -133,7 +127,6 @@
         </div>
       </div>
 
-      <!-- Mobile Offcanvas Sidebar -->
       <div
         class="offcanvas offcanvas-start bg-body-tertiary"
         tabindex="-1"
@@ -151,7 +144,6 @@
           ></button>
         </div>
         <div class="offcanvas-body d-flex flex-column h-100">
-          <!-- Same Nav Content as Desktop -->
           <ul class="nav nav-pills flex-column mb-auto gap-2">
             <li class="nav-item">
               <a
@@ -176,12 +168,10 @@
         </div>
       </div>
 
-      <!-- Page Content -->
       <div
         class="w-100"
         style="margin-left: 280px; @media (max-width: 991px) {margin-left: 0}"
       >
-        <!-- Responsive wrapper styling hack for inline specific style needed due to fixed sidebar width -->
         <style>
           @media (max-width: 991.98px) {
             .w-100[style] {
@@ -190,7 +180,6 @@
           }
         </style>
 
-        <!-- Top Header -->
         <header class="p-3 mb-4 border-bottom bg-body-tertiary sticky-top">
           <div
             class="container-fluid d-flex align-items-center justify-content-between"
@@ -224,7 +213,6 @@
 
               <div class="vr mx-2"></div>
 
-              <!-- Theme Toggle -->
               <button
                 class="btn btn-outline-secondary rounded-circle p-2"
                 id="themeToggle"
@@ -249,9 +237,7 @@
           </div>
         </header>
 
-        <!-- Main Content Container -->
         <main class="container-fluid px-4 pb-5">
-          <!-- KPI Cards -->
           <div class="row g-4 mb-4">
             <div class="col-sm-6 col-xl-3">
               <div class="card border-0 shadow-sm h-100 rounded-4">
@@ -373,7 +359,6 @@
             </div>
           </div>
 
-          <!-- Chart and Table -->
           <div class="row g-4 mb-5">
             <div class="col-lg-7">
               <div class="card border-0 shadow-sm h-100 rounded-4">
@@ -503,7 +488,6 @@
             </div>
           </div>
 
-          <!-- Projects Section -->
           <div
             class="d-flex justify-content-between align-items-center mb-4"
             id="projects"
@@ -519,7 +503,6 @@
           </div>
 
           <div class="row g-4 mb-5" id="projectGrid">
-            <!-- Project 1 -->
             <div class="col-md-6 col-lg-4">
               <div class="card border-0 shadow-sm h-100 rounded-4">
                 <div class="card-body">
@@ -606,7 +589,6 @@
               </div>
             </div>
 
-            <!-- Project 2 -->
             <div class="col-md-6 col-lg-4">
               <div class="card border-0 shadow-sm h-100 rounded-4">
                 <div class="card-body">
@@ -687,7 +669,6 @@
               </div>
             </div>
 
-            <!-- Project 3 -->
             <div class="col-md-6 col-lg-4">
               <div class="card border-0 shadow-sm h-100 rounded-4">
                 <div class="card-body">
@@ -762,7 +743,6 @@
             </div>
           </div>
 
-          <!-- Reports Section (Restored) -->
           <div class="d-flex align-items-center mb-4" id="reports">
             <h4 class="fw-bold mb-0">Reports & Analytics</h4>
           </div>
@@ -792,7 +772,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
     <div
       class="modal fade"
       id="addProjectModal"
@@ -885,12 +864,9 @@
       </div>
     </div>
 
-    <!-- Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Wrap in DOMContentLoaded to ensure elements exist
       document.addEventListener("DOMContentLoaded", () => {
-        // --- THEME LOGIC ---
         const getStoredTheme = () => localStorage.getItem("theme") || "dark";
 
         const setTheme = (theme) => {
@@ -899,7 +875,6 @@
 
           const icon = document.getElementById("themeIcon");
           if (icon) {
-            // Check if icon exists before manipulating
             if (theme === "dark") {
               icon.classList.remove("fa-sun");
               icon.classList.add("fa-moon");
@@ -914,7 +889,6 @@
           }
         };
 
-        // --- CHART HELPERS ---
         const getChartColors = (theme) => {
           const isDark = theme === "dark";
           return {
@@ -923,7 +897,6 @@
           };
         };
 
-        // Chart instances
         let utilChart, reportBar, reportPie;
 
         const updateCharts = (theme) => {
@@ -932,7 +905,6 @@
           if (utilChart) {
             utilChart.options.scales.y.grid.color = colors.grid;
             utilChart.options.scales.y.ticks.color = colors.text;
-            // x-axis doesn't have grid in config, just ticks
             utilChart.options.scales.x.ticks.color = colors.text;
             utilChart.update();
           }
@@ -942,18 +914,15 @@
             reportBar.options.scales.x.ticks.color = colors.text;
             reportBar.update();
           }
-          // Pie chart doesn't need grid/text update usually, but can update border if needed
           if (reportPie) {
             reportPie.update();
           }
         };
 
-        // --- INITIALIZE CHARTS ---
         const initCharts = () => {
           const theme = getStoredTheme();
           const colors = getChartColors(theme);
 
-          // 1. Utilization
           const ctx = document.getElementById("utilChart");
           if (ctx) {
             utilChart = new Chart(ctx, {
@@ -996,7 +965,6 @@
             });
           }
 
-          // 2. Report Bar
           const barCtx = document.getElementById("reportBar");
           if (barCtx) {
             reportBar = new Chart(barCtx, {
@@ -1032,7 +1000,6 @@
             });
           }
 
-          // 3. Report Pie
           const pieCtx = document.getElementById("reportPie");
           if (pieCtx) {
             reportPie = new Chart(pieCtx, {
@@ -1067,11 +1034,9 @@
           }
         };
 
-        // --- EXECUTION ORDER ---
         setTheme(getStoredTheme()); // 1. Set styles
         initCharts(); // 2. Create charts with correct styles
 
-        // --- EVENT LISTENERS ---
         const toggleBtn = document.getElementById("themeToggle");
         if (toggleBtn) {
           toggleBtn.addEventListener("click", () => {
@@ -1082,7 +1047,6 @@
           });
         }
 
-        // Add Project Logic
         const saveBtn = document.getElementById("saveProjectBtn");
         if (saveBtn) {
           saveBtn.addEventListener("click", function () {
@@ -1098,7 +1062,6 @@
               return;
             }
 
-            // Determine badge color
             let badgeClass = "bg-secondary-subtle text-secondary";
             if (team === "Backend")
               badgeClass = "bg-primary-subtle text-primary";
@@ -1107,7 +1070,6 @@
             if (team === "DevOps")
               badgeClass = "bg-warning-subtle text-warning";
 
-            // Parse Date
             const dateDate = new Date(due);
             const month = dateDate
               .toLocaleString("default", { month: "short" })
@@ -1170,3 +1132,4 @@
     </script>
   </body>
 </html>
+
